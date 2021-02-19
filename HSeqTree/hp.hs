@@ -95,7 +95,7 @@ hamPair n = keisan s n
 
 gousei :: (Int -> Int) -> Int -> (Int -> Int)
 gousei f 1 = f
-gousei f n = gousei (f . f) (n+1)
+gousei f n = gousei (f . f) (n-1)
 
 main::IO()
 main = print $ gousei hamPair 86 86
