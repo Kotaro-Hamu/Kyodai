@@ -72,7 +72,7 @@ tateVan ((x,y):s) n = van b d n ++ s
         b = take r s
         r = root1 ((x,y):s)
 
-root0でノードを辿り、
+--root0でノードを辿り、
 --そのノードに書いてある整数つまりペアの右の数を
 --もとにヒドラを描き、root0でバッドルート探査。
 root1::[(Int,Int)]->Int
@@ -94,14 +94,14 @@ josyo::[(Int,Int)]->Int->[(Int,Int)]
 josyo s d = zip (map (+d) s0) s1
     where (s0,s1) = unzip s
 
-−−バシク行列のp0と同じ、単に親
+--バシク行列のp0と同じ、単に親
 p0::[(Int,Int)]->Int->Int 
 p0 _ (-1) = -1
 p0 s x = if s0x == 0
     then -1
     else minimum [t | t <- [x..length s0 -1], s0 !! t < s0x]
     where 
-        (s0,_) = unzip s
+        s0 = map fst s
         s0x = s0 !! x
 
 --展開しつつ角括弧の中を増やす感じ
@@ -114,11 +114,10 @@ hamPair::Int->Int
 hamPair n = keisan s n
     where s = zip [0..n] [0..n]
 
---fを2n回合成した関数を返す
+--fをたくさん自己合成した関数を返す
 gousei :: (Int -> Int) -> Int -> (Int -> Int)
-gousei f 0 = f
-gousei f n = gousei (f . f) (n-1)
+gousei f 1 = f
+gousei f n = f . gousei f (n-1)
 
 main::IO()
-main = print $ gousei hamPair 43 86
-
+main = print $ gousei hamPair 86 86
