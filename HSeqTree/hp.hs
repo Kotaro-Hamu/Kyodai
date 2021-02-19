@@ -107,7 +107,7 @@ p0 s x = if s0x == 0
 --展開しつつ角括弧の中を増やす感じ
 keisan::[(Int,Int)]->Int->Int
 keisan [] n = n
-keisan s n = keisan (tenkai s n) n*n
+keisan s n = keisan (tenkai s n) 10^n
 
 --ハムペアの限界を召喚する
 hamPair::Int->Int 
