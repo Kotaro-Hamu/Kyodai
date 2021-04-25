@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+        integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js"
+        integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+        integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP:400,700&display=swap&subset=japanese"
+        rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    { left: "\\[", right: "\\]", display: true },
+                    { left: "$", right: "$", display: false }
+                ]
+            });
+        });
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Serif JP', serif;
+        }
+    </style>
+
+    <h1>お料理巨大数エントリー</h1>
+    <h2>ランク付き肉(以下「肉」)の定義</h2>
+    <p>任意の自然数$n$に対し、$🥩_n$をランク$n$の肉と呼ぶ。</p>
+    <p>$🥩_n$は通常の自然数と同様に加算・減算・比較をすることができる。</p>
+    <p>以下一緒になるよね という例。</p>
+    \[
+    \begin{aligned}
+    🥩_n + 🥩_m &= 🥩_{n+m}\\
+    🥩_n - 🥩_m &= 🥩_{n-m}\\
+    n \gt m &\Leftrightarrow 🥩_n \gt 🥩_m
+    \end{aligned}
+    \]
+    <p>肉全体集合🧠を以下のように定める。</p>
+    \[ 🧠 := \{ 🥩_n \mid n \in \mathbb{N} \}\]
+
+    <h2>肉枝の定義</h2>
+    <p>肉枝は自然数と肉のペアである。</p>
+    <p>一般に自然数$n$と肉$🥩_m$を用いて$(n,🥩_m)$のように表せられる。</p>
+    <p>比較はミニ辞書式比較</p>
+    \[(n,🥩_m) \gt (x,🥩_y) \Leftrightarrow n \gt x \lor (n = x \land 🥩_m \gt 🥩_y) \]
+
+    <h2>肉木の定義</h2>
+    <p>一番目の要素が$(0,🥩_0)$の肉枝の有限列を肉木と呼ぶ。</p>
+    <p>肉木全体集合を🌹と記す。</p>
+    <p>肉木同士の比較はちょっと特殊なので注意。</p>
+    <p>以下肉木$A = (a_{00},🥩_{a_{01}})(a_{10},🥩_{a_{11}})\cdots(a_{X0},🥩_{a_{X1}}),B =
+        (b_{00},🥩_{b_{01}})(b_{10},🥩_{b_{11}})\cdots(b_{Y0},🥩_{b_{Y1}})$の比較アルゴリズムを記す。</p>
+    <ol>
+        <li>肉木A,Bを元に$A' = (a_{00}-a_{00},🥩_{a_{01}})(a_{10}-a_{00},🥩_{a_{11}})\cdots(a_{X0}-a_{00},🥩_{a_{X1}}),B' =
+            (b_{00}-b_{00},🥩_{b_{01}})(b_{10}-b_{00},🥩_{b_{11}})\cdots(b_{Y0}-b_{00},🥩_{b_{Y1}})$を作る。</li>
+        <li>A'とB'を辞書式比較する。</li>
+        <li>$A' \gt B' \Leftrightarrow A \gt B$反対バージョンも成り立つよ。</li>
+    </ol>
+
+
+    <h2>親探査写像 $p_0$の定義</h2>
+    \[
+    \begin{aligned}
+    p_0:🌹 \times \mathbb{N} &\rightarrow \mathbb{N}\\
+    (🥀,x)&\mapsto p_0^🥀(x)
+    \end{aligned}
+    \]
+    <p>$🥀 =
+        (a_0,b_0)(a_1,b_1)\cdots(a_X,b_X)$を満たす自然数$X$と自然数列$\{a_n\}_{n=0,1,\ldots,X}$と肉列$\{b_n\}_{n=0,1,\ldots,X}$が存在する。
+    </p>
+    <p>$p_0^🥀(x) = \max\{ k \mid k \lt x \land a_k \lt a_x \}$</p>
+
+    <h2>祖先探査写像 $p_1$の定義</h2>
+    \[
+    \begin{aligned}
+    p_1:🌹 \times \mathbb{N} &\rightarrow \mathbb{N}\\
+    (🥀,x)&\mapsto p_1^🥀(x)
+    \end{aligned}
+    \]
+    <p>$🥀
+        =(a_0,b_0)(a_1,b_1)\cdots(a_X,b_X)$を満たす自然数$X$と自然数列$\{a_n\}_{n=0,1,\ldots,X}$と肉列$\{b_n\}_{n=0,1,\ldots,X}$が存在する。
+    </p>
+    \[
+    \begin{aligned}
+    🥀_x &= (a_x,b_x)\\
+    p(x) &= p_0^🥀(x)\\
+    j_m &= (\exists a. k = p(x) \lt x \land b_k \lt b_x)を満たす(m+1)番目に大きい自然数k \\
+    0 &= a_{j_W}\\
+    J &= \{j_0,j_1,\ldots,j_W\}\\
+    fml(x) &= \begin{cases}
+    🥀_x🥀_{x+1}\cdots🥀_X&(\text{if}\ \forall k \gt x .🥀_k \geq (a_x,1))\\
+    🥀_x🥀_{x+1}\cdots🥀_{\min\{k \mid k \gt x \land 🥀_k \lt (a_x,1) \}-1}&(\text{otherwise})
+    \end{cases}\\
+    p_1^🥀(x) &= \begin{cases}
+    j_W &(\text{if}\ fml(j_0) = \min\{fml(k) \mid k \in J \})\\
+    \max\{k \in J \mid fml(k) \lt fml(j_0)\}&(\text{otherwise})
+    \end{cases}
+    \end{aligned}
+    \]
+    <h2>展開写像 この$\cdot$おいしそうですね！！もうご飯$\cdot$杯も食べちゃいましたよ！！ の定義</h2>
+    \[
+    \begin{aligned}
+    この\cdotおいしそうですね！！もうご飯\cdot杯も食べちゃいましたよ！！:🌹\times \mathbb{N} &\rightarrow \mathbb{N}\\
+    (🥀,n) &\mapsto この🥀おいしそうですね！！もうご飯n杯も食べちゃいましたよ！！
+    \end{aligned}
+    \]
+    <ol>
+        <li>🥀=(0,🥩_0)の場合。</li>
+        この🥀おいしそうですね！！もうご飯n杯も食べちゃいましたよ！！ = n
+        <li>適当な肉木🥀’を用いて🥀=🥀'(0,🥩_0)と表せられるの場合。</li>
+        この🥀おいしそうですね！！もうご飯n杯も食べちゃいましたよ！！ = この🥀'おいしそうですね！！もうご飯(n+1)杯も食べちゃいましたよ！！
+        <li>その他場合。$🥀 =
+            (a_0,b_0)(a_1,b_1)\cdots(a_X,b_X)$を満たす自然数$X$と自然数列$\{a_n\}_{n=0,1,\ldots,X}$と肉列$\{b_n\}_{n=0,1,\ldots,X}$が存在する。$p(x)
+            = p_1^🥀(x)$とする。
+            <ol>
+                <li>b_X = 🥩_0の場合。</li>
+                \[
+                \begin{aligned}
+                r &= p_0^🥀(X)\\
+                G &= (a_0,b_0)(a_1,b_1)\cdots(a_{r-1},b_{r-1})\\
+                B &= (a_r,b_r)(a_{r+1},b_{r+1})\cdots(a_{X-1},b_{X-1})\\
+                この🥀おいしそうですね！！もうご飯n杯も食べちゃいましたよ！！ &= このG\underbrace{BB\cdots B}_{n+1}おいしそうですね！！もうご飯(n+1)杯も食べちゃいましたよ！！
+                \end{aligned}
+                \]
+                <li>他の場合。</li>
+                \[
+                \begin{aligned}
+                p_1(x) &= x番目に大きいk (\exists a.p^a(X) = k \land b_k \lt b_X)\\
+                r &= p(X)\\
+                \Delta_0 &= a_X-a_r\\
+                \Delta_{x1} &= \text{if}\ \exists a.p^{\circ a} = r\ \text{then}\ b_X - a_r - 1\ \text{else}\ 0\\
+                G &= (a_0,b_0)(a_1,b_1)\cdots(a_{r-1},b_{r-1})\\
+                B_m &=
+                (a_r+m\Delta_0,b_r+m\Delta_{r1})(a_{r+1}+m\Delta_0,b_{r+1}+m\Delta_{(r+1)1})\cdots(a_{X-1}+m\Delta_0,b_{X-1}+m\Delta_{(X-1)1})\\
+                この🥀おいしそうですね！！もうご飯n杯も食べちゃいましたよ！！ &= このGB_0B_1\cdots B_nおいしそうですね！！もうご飯(n+1)杯も食べちゃいましたよ！！
+                \end{aligned}
+                \]
+            </ol>
+        </li>
+    </ol>
+
+    <h2>関数 ランク$\cdot$の肉木いただきます！！ の定義</h2>
+    \[
+    \begin{aligned}
+    ランク\cdotの肉木いただきます！！:\mathbb{N} &\rightarrow \mathbb{N}\\
+    n&\mapsto ランクnの肉木いただきます！！
+    \end{aligned}
+    \]
+    ランク$n$の肉木いただきます！！ = この$(0,0)(1,🥩_n)$おいしそうですね！！もうご飯$0$杯も食べちゃいましたよ！！
+
+    <h2>提出巨大数 肉木のレビューの星の数 の定義</h2>
+    肉木のレビューの星の数 &= ランクランクランクランクランク5の肉木いただきます！！の肉木いただきます！！の肉木いただきます！！の肉木いただきます！！の肉木いただきます！！
+</body>
+
+</html>
